@@ -34,7 +34,7 @@ h_Sensors   *h_obj_sensors;     // Pointer to sensors object.
 a_PID       *a_obj_pid;         // Pointer to a_PID object.
 a_Bad_Move  *a_obj_bad_move;    // Pointer to simple movement object.
 
-pros::vision_signature_s_t h_obj_red_sig    // Red Vision signature.
+pros::vision_signature_s_t h_obj_red_sig_center    // Red Vision signature.
 {
     pros::Vision::signature_from_utility
     (
@@ -43,7 +43,7 @@ pros::vision_signature_s_t h_obj_red_sig    // Red Vision signature.
     )
 };
 
-pros::vision_signature_s_t h_obj_blu_sig    // Blue Vision signature.
+pros::vision_signature_s_t h_obj_blu_sig_center    // Blue Vision signature.
 {
     pros::Vision::signature_from_utility
     (
@@ -52,8 +52,28 @@ pros::vision_signature_s_t h_obj_blu_sig    // Blue Vision signature.
     )
 };
 
+pros::vision_signature_s_t h_obj_red_sig_home    // Red Vision signature.
+{
+    pros::Vision::signature_from_utility
+    (
+        static_cast<std::int32_t>(h_sVision_IDs::RED_ID),
+        1639, 10037, 5838, -2751, -261, -1506, 1.0, 0
+    )
+};
+
+pros::vision_signature_s_t h_obj_blu_sig_home    // Blue Vision signature.
+{
+    pros::Vision::signature_from_utility
+    (
+        static_cast<std::int32_t>(h_sVision_IDs::BLUE_ID),
+        -3361, 1, -1680, 607, 11513, 6060, 0.9, 0
+    )
+};
+
 pros::Controller h_obj_ctrl {pros::controller_id_e_t::E_CONTROLLER_MASTER}; // Controller object.
 
 h_sVision_IDs h_sorted_ball_id;     // Ball sort ID.
 
 a_Autonomous_Routine a_routine;     // Autonomous routine ID.
+
+h_sVision_Sigs h_sigs;

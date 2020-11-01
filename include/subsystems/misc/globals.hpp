@@ -73,13 +73,17 @@ extern h_Sensors    *h_obj_sensors;     // Pointer to sensors object.
 extern a_PID        *a_obj_pid;         // Pointer to a_PID object.
 extern a_Bad_Move   *a_obj_bad_move;    // Pointer to simple movement object.
 
-extern pros::vision_signature_s_t h_obj_red_sig;    // Red Vision signature.
-extern pros::vision_signature_s_t h_obj_blu_sig;    // Blue Vision signature.
+extern pros::vision_signature_s_t h_obj_red_sig_center;    // Red Vision signature.
+extern pros::vision_signature_s_t h_obj_blu_sig_center;    // Blue Vision signature.
+extern pros::vision_signature_s_t h_obj_red_sig_home;    // Red Vision signature.
+extern pros::vision_signature_s_t h_obj_blu_sig_home;    // Blue Vision signature.
 
 extern pros::Controller h_obj_ctrl;     // Controller object.
 
 extern h_sVision_IDs h_sorted_ball_id;  // Ball sort ID.
 
 extern a_Autonomous_Routine a_routine;  // Autonomous routine ID.
+
+extern h_sVision_Sigs h_sigs;
 
 #endif  // HARDWARE_HPP

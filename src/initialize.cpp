@@ -98,6 +98,39 @@ void selector_screen()
 
         pros::delay(10);    // Delay b/c the LCD can't refresh faster than this.
     }
+
+    // Reset current_sel.
+    current_sel = 0;
+    // Infinite loop.
+    while (true)
+    {
+        // Printing text on screen & selecting auto routine.
+        switch (current_sel)
+        {
+        case 0:
+            pros::lcd::print(5, "sigs: center");     // Red routine.
+            h_sigs = h_sVision_Sigs::CENTER;
+            break;
+        case 1:
+            pros::lcd::print(5, "sigs: home ");     // Blue routine.
+            h_sigs = h_sVision_Sigs::HOME;
+            break;
+        }
+
+        // Associate each button used on the controller to a selection function.
+        if (h_obj_ctrl.get_digital_new_press(h_ctrl_digital::E_CONTROLLER_DIGITAL_LEFT))        // Scroll left.
+            { if (current_sel > 0) {--current_sel;} }
+        else if (h_obj_ctrl.get_digital_new_press(h_ctrl_digital::E_CONTROLLER_DIGITAL_RIGHT))  // Scroll right.
+            { if (current_sel < 1) {++current_sel;} }
+        else if (h_obj_ctrl.get_digital_new_press(h_ctrl_digital::E_CONTROLLER_DIGITAL_A))      // Select.
+        { 
+            h_obj_ctrl.rumble("...");   // Rumble to let you know you selected.
+            break;                      // Exit the infinite loop.
+        }
+
+        pros::delay(10);    // Delay b/c the LCD can't refresh faster than this.
+    }
+    
     
     clear_screen();
     h_obj_ctrl.print(0, 0, "           ");
@@ -132,10 +165,6 @@ void initialize()
     h_obj_chassis = new h_Chassis{h_Drive_Ports{19, 20, 9, 10}};
     h_obj_sensors = new h_Sensors{h_Smart_Sen_Ports{16, 6}, h_Analog_Sen_Ports{5, 1, 3}};
 
-    h_obj_sensors->initialize();     // Initialize the sensor object.
-    h_obj_sensors->add_sig(h_obj_red_sig, h_sVision_IDs::RED_ID)     // Add red Vision sig.
-                 .add_sig(h_obj_blu_sig, h_sVision_IDs::BLUE_ID);   // Add blue Vision sig.
-
     pros::lcd::print(0, "everything initialized.");
     pros::delay(500);
     clear_screen(); // Clear screen.
@@ -143,4 +172,8 @@ void initialize()
     h_obj_ctrl.print(0, 0, "check brain");
     h_obj_ctrl.rumble("---");
     selector_screen();  // Run selection screen.
+
+    h_obj_sensors->initialize();     // Initialize the sensor object.
+    h_obj_sensors->add_sig((h_sigs == h_sVision_Sigs::CENTER) ? h_obj_red_sig_center : h_obj_red_sig_home, h_sVision_IDs::RED_ID)     // Add red Vision sig.
+                 .add_sig((h_sigs == h_sVision_Sigs::CENTER) ? h_obj_blu_sig_center : h_obj_blu_sig_home, h_sVision_IDs::BLUE_ID);   // Add blue Vision sig.
 }

@@ -31,6 +31,13 @@ enum class h_Encoder_IDs
     AVG_SIDES
 };
 
+/// enum - Signatures
+enum class h_sVision_Sigs
+{
+    CENTER,
+    HOME
+};
+
 /// struct - Smart sensor ports.
 //? In order of: IMU, Vision
 struct h_Smart_Sen_Ports

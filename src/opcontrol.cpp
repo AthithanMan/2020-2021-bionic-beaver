@@ -114,7 +114,7 @@ void macro_indexing()
 
     // Set the velocity of the conveyor, using the ball sort function (if it is on).
     h_obj_conveyor->set_vel(
-        (is_auto_sort ? ball_sort(ball, 0) : 600),
+        (is_auto_sort ? ball_sort(ball, 0) : 0),
         600);
     // Set the velocity of the intakes.
     h_obj_intake->set_vel(600);
@@ -139,8 +139,6 @@ void macro_shooting()
 {
     // Set the velocity of the conveyor.
     h_obj_conveyor->set_vel(600);
-    // Run the intakes for a short period of time.
-    h_obj_intake->set_abs(750, 600);
 }
 
 // Run intakes.
