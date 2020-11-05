@@ -10,6 +10,12 @@
 #include "main.h"   // Main header.
 
 
+//* Local defs.
+int old_velocity_l {0};
+int old_velocity_r {0};
+const int max_change {5};
+
+
 //* Private definitions
 
 /// Calculation function for straight line movements.
@@ -47,9 +53,17 @@ void a_PID::calculate_str()
         else if (std::abs(output_r) < k_Auto::a_min_str_speed)
             output_r = std::copysign(k_Auto::a_min_str_speed, output_r);
 
+        // Slew the values to lower jerk.
+        output_l = std::clamp(output_l, old_velocity_l - max_change, old_velocity_l + max_change);
+        output_r = std::clamp(output_r, old_velocity_r - max_change, old_velocity_r + max_change);
+
         // Set previous errors.
         m_lst_err_l = m_err_l;
         m_lst_err_r = m_err_r;
+
+        // Set old velocities.
+        old_velocity_l = output_l;
+        old_velocity_r = output_r;
 
         // Set output power to the drive.
         h_obj_chassis->drive_vel(output_l, output_r);
@@ -96,9 +110,17 @@ void a_PID::calculate_p_trn()
         else if (std::abs(output_r) < k_Auto::a_min_p_trn_speed)
             output_r = std::copysign(k_Auto::a_min_p_trn_speed, output_r);
 
+        // Slew the values to lower jerk.
+        output_l = std::clamp(output_l, old_velocity_l - max_change, old_velocity_l + max_change);
+        output_r = std::clamp(output_r, old_velocity_r - max_change, old_velocity_r + max_change);
+
         // Set previous errors.
         m_lst_err_l = m_err_l;
         m_lst_err_r = m_err_r;
+
+        // Set old velocities.
+        old_velocity_l = output_l;
+        old_velocity_r = output_r;
 
         // Set output power to the drive.
         h_obj_chassis->drive_vel(output_l, output_r);
@@ -192,6 +214,10 @@ void a_PID::drive()
         // Start heading calculation
         calculate_p_trn();
     }
+
+    // Clear old velocities.
+    old_velocity_l = 0;
+    old_velocity_r = 0;
 
     // Stop the motors.
     h_obj_chassis->drive_vel();
