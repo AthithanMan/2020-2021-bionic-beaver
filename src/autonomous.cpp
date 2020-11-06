@@ -159,16 +159,36 @@ void intake_until_in()
 
 //* Routine functions.
 
-// Red routine.
-void red()
+// Live routine.
+void live()
 {
-
-}
-
-// Blue routine.
-void blue()
-{
-
+    h_obj_sensors->reset_enc();
+    h_obj_intake->set_vel(600);
+    a_obj_pid->set_gains(gains_str).set_target(a_Ticks{0.8_ft}).drive();
+    h_obj_intake->set_vel();
+    h_obj_conveyor->set_vel(600);
+    pros::delay(525);
+    h_obj_conveyor->set_vel();
+    a_obj_pid->set_gains(gains_str).set_target(a_Ticks{-5.0_ft}).drive();
+    pros::delay(5);
+    a_obj_pid->set_gains(gains_p_trn).set_target(a_Degrees{180.0}).drive();
+    pros::delay(5);
+    a_obj_pid->set_gains(gains_str).set_target(a_Ticks{1.7_ft}).drive();
+    h_obj_conveyor->set_vel(-200);
+    pros::delay(250);
+    h_obj_conveyor->set_vel(600);
+    pros::delay(900);
+    h_obj_conveyor->set_vel();
+    a_obj_pid->set_gains(gains_str).set_target(a_Ticks{-1.7_ft}).drive();
+    pros::delay(5);
+    a_obj_pid->set_gains(gains_p_trn).set_target(a_Degrees{110.0}).drive();
+    h_obj_intake->set_vel(600);
+    a_obj_pid->set_gains(gains_str).set_target(a_Ticks{5.0_ft}).drive();
+    pros::delay(100);
+    h_obj_conveyor->set_vel(600);
+    pros::delay(1000);
+    h_obj_conveyor->set_vel();
+    h_obj_intake->set_vel();
 }
 
 // Skills routine.
@@ -272,11 +292,8 @@ void autonomous()
     // Run each auto routine based on selected auto.
     switch (a_routine)
     {
-    case a_Autonomous_Routine::RED:
-        red();
-        break;
-    case a_Autonomous_Routine::BLUE:
-        blue();
+    case a_Autonomous_Routine::LIVE:
+        live();
         break;
     case a_Autonomous_Routine::SKILLS:
         skills();

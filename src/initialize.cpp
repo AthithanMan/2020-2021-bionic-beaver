@@ -72,14 +72,10 @@ void selector_screen()
         switch (current_sel)
         {
         case 0:
-            pros::lcd::print(4, "auto: red  ");     // Red routine.
-            a_routine = a_Autonomous_Routine::RED;
+            pros::lcd::print(4, "auto: live ");     // Red routine.
+            a_routine = a_Autonomous_Routine::LIVE;
             break;
         case 1:
-            pros::lcd::print(4, "auto: blue ");     // Blue routine.
-            a_routine = a_Autonomous_Routine::BLUE;
-            break;
-        case 2:
             pros::lcd::print(4, "auto: skills");    // Skills routine.
             a_routine = a_Autonomous_Routine::SKILLS;
             break;
@@ -89,7 +85,7 @@ void selector_screen()
         if (h_obj_ctrl.get_digital_new_press(h_ctrl_digital::E_CONTROLLER_DIGITAL_LEFT))        // Scroll left.
             { if (current_sel > 0) {--current_sel;} }
         else if (h_obj_ctrl.get_digital_new_press(h_ctrl_digital::E_CONTROLLER_DIGITAL_RIGHT))  // Scroll right.
-            { if (current_sel < 2) {++current_sel;} }
+            { if (current_sel < 1) {++current_sel;} }
         else if (h_obj_ctrl.get_digital_new_press(h_ctrl_digital::E_CONTROLLER_DIGITAL_A))      // Select.
         { 
             h_obj_ctrl.rumble("...");   // Rumble to let you know you selected.
