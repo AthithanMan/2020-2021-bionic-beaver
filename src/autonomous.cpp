@@ -169,19 +169,21 @@ void live()
     h_obj_conveyor->set_vel(600);
     pros::delay(525);
     h_obj_conveyor->set_vel();
-    a_obj_pid->set_gains(gains_str).set_target(a_Ticks{-5.0_ft}).drive();
+    a_obj_pid->set_gains(gains_str).set_target(a_Ticks{-4.6_ft}).drive();
     pros::delay(5);
     a_obj_pid->set_gains(gains_p_trn).set_target(a_Degrees{180.0}).drive();
     pros::delay(5);
-    a_obj_pid->set_gains(gains_str).set_target(a_Ticks{1.7_ft}).drive();
+    a_obj_pid->set_gains(gains_str).set_target(a_Ticks{1.2_ft}).drive();
     h_obj_conveyor->set_vel(-200);
     pros::delay(250);
     h_obj_conveyor->set_vel(600);
+    h_obj_intake->set_vel(600);
     pros::delay(900);
     h_obj_conveyor->set_vel();
-    a_obj_pid->set_gains(gains_str).set_target(a_Ticks{-1.7_ft}).drive();
+    h_obj_intake->set_vel();
+    a_obj_pid->set_gains(gains_str).set_target(a_Ticks{-1.9_ft}).drive();
     pros::delay(5);
-    a_obj_pid->set_gains(gains_p_trn).set_target(a_Degrees{110.0}).drive();
+    a_obj_pid->set_gains(gains_p_trn).set_target(a_Degrees{113.0}).drive();
     h_obj_intake->set_vel(600);
     a_obj_pid->set_gains(gains_str).set_target(a_Ticks{5.0_ft}).drive();
     pros::delay(100);
@@ -189,6 +191,7 @@ void live()
     pros::delay(1000);
     h_obj_conveyor->set_vel();
     h_obj_intake->set_vel();
+    a_obj_pid->set_gains(gains_str).set_target(a_Ticks{-1.0_ft}).drive();
 }
 
 // Skills routine.
