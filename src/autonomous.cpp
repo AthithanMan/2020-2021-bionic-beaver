@@ -183,7 +183,7 @@ void live()
     h_obj_intake->set_vel();
     a_obj_pid->set_gains(gains_str).set_target(a_Ticks{-1.9_ft}).drive();
     pros::delay(5);
-    a_obj_pid->set_gains(gains_p_trn).set_target(a_Degrees{113.0}).drive();
+    a_obj_pid->set_gains(gains_p_trn).set_target(a_Degrees{112.5}).drive();
     h_obj_intake->set_vel(600);
     a_obj_pid->set_gains(gains_str).set_target(a_Ticks{5.0_ft}).drive();
     pros::delay(100);
