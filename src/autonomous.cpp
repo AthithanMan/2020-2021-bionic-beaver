@@ -187,10 +187,10 @@ void live()
     h_obj_intake->set_vel(600);
     a_obj_pid->set_gains(gains_str).set_target(a_Ticks{5.0_ft}).drive();
     pros::delay(100);
+    h_obj_intake->set_vel();
     h_obj_conveyor->set_vel(600);
     pros::delay(1000);
     h_obj_conveyor->set_vel();
-    h_obj_intake->set_vel();
     a_obj_pid->set_gains(gains_str).set_target(a_Ticks{-1.0_ft}).drive();
 }
 
