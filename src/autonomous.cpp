@@ -292,6 +292,9 @@ void autonomous()
     // Create new a_PID object into heap memory.
     a_obj_pid = new a_PID{gains_str};
     
+    live();
+
+    /*
     // Run each auto routine based on selected auto.
     switch (a_routine)
     {
@@ -302,4 +305,5 @@ void autonomous()
         skills();
         break;
     }
+    */
 }

@@ -10,7 +10,7 @@
 
 
 //* Local "global" variables.
-bool is_auto_sort {true};
+bool is_auto_sort {false};
 
 //* Macro forward declarations
 void macro_indexing();      // Indexing.
