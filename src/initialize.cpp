@@ -165,13 +165,9 @@ void initialize()
     pros::delay(500);
     clear_screen(); // Clear screen.
 
-    ///h_obj_ctrl.print(0, 0, "check brain");
+    h_obj_ctrl.print(0, 0, "check brain");
     h_obj_ctrl.rumble("---");
-    ///selector_screen();  // Run selection screen.
-
-    h_sorted_ball_id = h_sVision_IDs::RED_ID;
-    a_routine = a_Autonomous_Routine::LIVE;
-    h_sigs = h_sVision_Sigs::CENTER;
+    selector_screen();  // Run selection screen.
 
     h_obj_sensors->initialize();     // Initialize the sensor object.
     h_obj_sensors->add_sig((h_sigs == h_sVision_Sigs::CENTER) ? h_obj_red_sig_center : h_obj_red_sig_home, h_sVision_IDs::RED_ID)     // Add red Vision sig.

@@ -43,7 +43,6 @@ public:
     void set_abs(double position, int velocity);
     void set_abs(double t_position, double b_position, int t_velocity, int b_velocity);
 
-private:
     pros::Motor m_CB;
     pros::Motor m_CT;
 

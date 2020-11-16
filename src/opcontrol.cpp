@@ -43,7 +43,7 @@ int ball_sort(pros::vision_object_s_t &ball, int top_pow)
 // Driver control.
 void drive_control()
 {
-    while (!pros::competition::is_autonomous())
+    while (!(pros::competition::is_autonomous() || pros::competition::is_disabled()))
     {
         // Get power and turn voltages.
         int pow {check_deadzone(h_obj_ctrl.get_analog(h_ctrl_analog::E_CONTROLLER_ANALOG_RIGHT_Y))},
@@ -60,7 +60,7 @@ void drive_control()
 // Conveyor and intake control.
 void conveyor_intake_control()
 {
-    while (!pros::competition::is_autonomous())
+    while (!(pros::competition::is_autonomous() || pros::competition::is_disabled()))
     {
         // Big elif block to determine which buttons were pressed.
         // Links corrosponding functions with the button.
@@ -94,14 +94,25 @@ void conveyor_intake_control()
     }
 }
 
+void telem()
+{
+    while (!(pros::competition::is_autonomous() || pros::competition::is_disabled()))
+    {
+        pros::lcd::print(0, "tL: %f, tR: %f", h_obj_intake->m_IL.get_torque(), h_obj_intake->m_IR.get_torque());
+        pros::lcd::print(1, "wL: %f, wR: %f", h_obj_intake->m_IL.get_power(), h_obj_intake->m_IR.get_power());
+        pros::delay(10);
+    }
+}
+
 // Main operator control callback.
 void opcontrol()
 {
     // Tasks are created to allow chassis control, conveyor & intake control, and debug 
     // to run concurrently.
 
-    pros::Task chassis_task {drive_control, "tChassis"};
-    pros::Task conveyor_intake_task {conveyor_intake_control, "tConveyorIntake"};
+    pros::Task chassis_task {drive_control};
+    pros::Task conveyor_intake_task {conveyor_intake_control};
+    pros::Task telem_task {telem};
 }
 
 //* Macros

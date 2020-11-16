@@ -41,7 +41,6 @@ public:
     void set_vel(int l_velocity, int r_velocity);
     void set_abs(double position, int velocity);
 
-private:
     pros::Motor m_IL;
     pros::Motor m_IR;
 

@@ -13,7 +13,7 @@
 //* Local defs.
 int old_velocity_l {0};
 int old_velocity_r {0};
-const int max_change {5};
+const int max_change {2};
 
 
 //* Private definitions
