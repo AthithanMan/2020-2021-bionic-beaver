@@ -14,5 +14,5 @@ temp.log
 temp.errors
 *.ini
 .d/
-.scripts/
-.docs/
+scripts/
+docs/
