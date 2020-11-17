@@ -51,12 +51,12 @@ void selector_screen()
 
         // Associate each button used on the controller to a selection function.
         if (h_obj_ctrl.get_digital_new_press(h_ctrl_digital::E_CONTROLLER_DIGITAL_LEFT))        // Scroll left.
-            { if (current_sel > 0) {--current_sel;} }
+            { if (current_sel > 0) {--current_sel; h_obj_ctrl.rumble(".");} }
         else if (h_obj_ctrl.get_digital_new_press(h_ctrl_digital::E_CONTROLLER_DIGITAL_RIGHT))  // Scroll right.
-            { if (current_sel < 2) {++current_sel;} }
+            { if (current_sel < 2) {++current_sel; h_obj_ctrl.rumble(".");} }
         else if (h_obj_ctrl.get_digital_new_press(h_ctrl_digital::E_CONTROLLER_DIGITAL_A))      // Select.
         { 
-            h_obj_ctrl.rumble("...");   // Rumble to let you know you selected.
+            h_obj_ctrl.rumble("-");   // Rumble to let you know you selected.
             break;                      // Exit the infinite loop.
         }
 
@@ -83,12 +83,12 @@ void selector_screen()
 
         // Associate each button used on the controller to a selection function.
         if (h_obj_ctrl.get_digital_new_press(h_ctrl_digital::E_CONTROLLER_DIGITAL_LEFT))        // Scroll left.
-            { if (current_sel > 0) {--current_sel;} }
+            { if (current_sel > 0) {--current_sel; h_obj_ctrl.rumble(".");} }
         else if (h_obj_ctrl.get_digital_new_press(h_ctrl_digital::E_CONTROLLER_DIGITAL_RIGHT))  // Scroll right.
-            { if (current_sel < 1) {++current_sel;} }
+            { if (current_sel < 1) {++current_sel; h_obj_ctrl.rumble(".");} }
         else if (h_obj_ctrl.get_digital_new_press(h_ctrl_digital::E_CONTROLLER_DIGITAL_A))      // Select.
         { 
-            h_obj_ctrl.rumble("...");   // Rumble to let you know you selected.
+            h_obj_ctrl.rumble("-");   // Rumble to let you know you selected.
             break;                      // Exit the infinite loop.
         }
 
@@ -115,12 +115,12 @@ void selector_screen()
 
         // Associate each button used on the controller to a selection function.
         if (h_obj_ctrl.get_digital_new_press(h_ctrl_digital::E_CONTROLLER_DIGITAL_LEFT))        // Scroll left.
-            { if (current_sel > 0) {--current_sel;} }
+            { if (current_sel > 0) {--current_sel; h_obj_ctrl.rumble(".");} }
         else if (h_obj_ctrl.get_digital_new_press(h_ctrl_digital::E_CONTROLLER_DIGITAL_RIGHT))  // Scroll right.
-            { if (current_sel < 1) {++current_sel;} }
+            { if (current_sel < 1) {++current_sel; h_obj_ctrl.rumble(".");} }
         else if (h_obj_ctrl.get_digital_new_press(h_ctrl_digital::E_CONTROLLER_DIGITAL_A))      // Select.
         { 
-            h_obj_ctrl.rumble("...");   // Rumble to let you know you selected.
+            h_obj_ctrl.rumble("-");   // Rumble to let you know you selected.
             break;                      // Exit the infinite loop.
         }
 
@@ -129,6 +129,7 @@ void selector_screen()
     
     
     clear_screen();
+    h_obj_ctrl.clear();
     h_obj_ctrl.print(0, 0, "           ");
 }
 
