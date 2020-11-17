@@ -13,10 +13,17 @@
 //* Local defs.
 int old_velocity_l {0};
 int old_velocity_r {0};
-const int max_change {2};
+const int max_change {125};
 
 
 //* Private definitions
+
+double filter(double curr, double last)
+{
+    double filter = curr - last;
+    if (std::fabs(filter) < 0.1) {filter = 0;}
+    return filter;
+}
 
 /// Calculation function for straight line movements.
 void a_PID::calculate_str()
@@ -26,21 +33,27 @@ void a_PID::calculate_str()
 
     // Output for left and right sides.
     int output_l, output_r;
+    double starting_heading {h_obj_sensors->get_rotation()};
+    double current_val {0.0};
+    double difference {0.0};
 
     // Loop as long as the chassis has not reached its target.
     while (std::abs(m_targ_dist - (h_obj_sensors->get_enc(h_Encoder_IDs::AVG_SIDES))) >= m_k_t_uncert)
     {
         // Calculate errors.
-        m_err_l = m_targ_l - h_obj_sensors->get_enc(h_Encoder_IDs::LEFT);
-        m_err_r = m_targ_r - h_obj_sensors->get_enc(h_Encoder_IDs::RIGHT);
+        current_val = h_obj_sensors->get_rotation();
+        difference = starting_heading - current_val;
+
+        m_err_l = m_targ_l - h_obj_sensors->get_enc(h_Encoder_IDs::AVG_SIDES);
+        m_err_r = m_targ_r - h_obj_sensors->get_enc(h_Encoder_IDs::AVG_SIDES);
 
         // Calculate derivatives.
         m_derv_l = (m_err_l - m_lst_err_l) / m_k_Dt;
         m_derv_r = (m_err_r - m_lst_err_r) / m_k_Dt;
 
         // Explicitely convert the values to integers to write to the motors.
-        output_l = static_cast<int>(std::round((m_err_l * m_kP) + (m_derv_l * m_kD)));
-        output_r = static_cast<int>(std::round((m_err_r * m_kP) + (m_derv_r * m_kD)));
+        output_l = static_cast<int>(std::round((m_err_l * m_kP) + (m_derv_l * m_kD) + (difference * k_Auto::a_heading_correct_kP)));
+        output_r = static_cast<int>(std::round((m_err_r * m_kP) + (m_derv_r * m_kD) - (difference * k_Auto::a_heading_correct_kP)));
 
         // Check whether the values are too high or too low to be used (left side).
         if (std::abs(output_l) > k_Auto::a_max_str_speed)
@@ -66,13 +79,12 @@ void a_PID::calculate_str()
         old_velocity_r = output_r;
 
         // Set output power to the drive.
-        h_obj_chassis->drive_vel(output_l, output_r);
+        h_obj_chassis->drive_volts(output_l, output_r);
 
         // Delay because the OCRs cannot record values faster than this.
         pros::delay(uint_m_k_Dt);
     }
 }
-
 
 /// Calculation function for point turn movements.
 void a_PID::calculate_p_trn()
@@ -80,12 +92,18 @@ void a_PID::calculate_p_trn()
     std::uint32_t uint_m_k_Dt = static_cast<std::uint32_t>(m_k_Dt);
 
     int output_l, output_r;
+    double current_val;
+    double filter_val;
+    double last_val {0.0};
     
     while (std::fabs(m_targ_head - h_obj_sensors->get_heading()) > m_k_h_uncert)
     {
+        current_val = h_obj_sensors->get_heading();
+        filter_val += filter(current_val, last_val);
         // Calculate the shortest angle towards the target from current heading.
-        double diff { fmod( (m_targ_head - h_obj_sensors->get_heading() + 180.0), 360.0) - 180 };
+        double diff { fmod( (m_targ_head - filter_val + 180.0), 360.0) - 180 };
         double theta { ( (diff < -180) ? diff + 360 : diff ) };
+        last_val = current_val;
 
         // Set errors.
         m_err_l = theta;
@@ -123,7 +141,7 @@ void a_PID::calculate_p_trn()
         old_velocity_r = output_r;
 
         // Set output power to the drive.
-        h_obj_chassis->drive_vel(output_l, output_r);
+        h_obj_chassis->drive_volts(output_l, output_r);
 
         // Delay because the OCRs cannot record values faster than this.
         pros::delay(uint_m_k_Dt);
@@ -220,7 +238,7 @@ void a_PID::drive()
     old_velocity_r = 0;
 
     // Stop the motors.
-    h_obj_chassis->drive_vel();
+    h_obj_chassis->drive_volts();
 
     // Reset all values.
     reset();
