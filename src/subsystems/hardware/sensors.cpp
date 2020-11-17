@@ -88,6 +88,11 @@ double h_Sensors::get_heading()
     return m_sIMU.get_heading();
 }
 
+double h_Sensors::get_rotation()
+{
+    return m_sIMU.get_rotation();
+}
+
 /// Reset all the encoder values.
 h_Sensors& h_Sensors::reset_enc()
 {

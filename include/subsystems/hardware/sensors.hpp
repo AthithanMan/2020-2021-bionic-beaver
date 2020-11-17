@@ -81,6 +81,7 @@ public:
     pros::vision_object_s_t get_obj_siz(int size);
 
     double get_heading();
+    double get_rotation();
 
     h_Sensors& reset_enc();
     int32_t get_enc(h_Encoder_IDs ID);
