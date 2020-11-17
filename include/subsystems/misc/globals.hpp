@@ -47,19 +47,20 @@ namespace k_Hardware    // Hardware constants.
 
 namespace k_Auto    // Autonomous constants.
 {
-    inline constexpr double a_def_kP {0.135};               // Default proportional gain.
+    inline constexpr double a_def_kP {2.36};                // Default proportional gain.
     inline constexpr double a_def_kI {0.0};                 // Default integral gain.
-    inline constexpr double a_def_kD {0.75};                // Default derivative gain.
+    inline constexpr double a_def_kD {0.0};                 // Default derivative gain.
     inline constexpr double a_def_integ_windup {0.0};       // Default integral windup threshold.
     inline constexpr int a_def_ocr_tick_range {5};          // Default OCR tick percentage of error.
     inline constexpr double a_def_imu_head_range {0.25};    // Default IMU heading percentage of error.
-    inline constexpr double a_p_trn_kP {1.15};              // Point turn proportional gain.
+    inline constexpr double a_p_trn_kP {50.0};              // Point turn proportional gain.
     inline constexpr double a_p_trn_kI {0.0};               // Point turn integral gain.
-    inline constexpr double a_p_trn_kD {2.5};               // Point turn derivative gain.
-    inline constexpr int a_max_str_speed {125};             // Maximum speed for straight driving.
-    inline constexpr int a_max_p_trn_speed {40};            // Maximum speed for point turning.
-    inline constexpr int a_min_str_speed {20};              // Minimum speed for straight driving.
-    inline constexpr int a_min_p_trn_speed {15};            // Minimum speed for point turning.
+    inline constexpr double a_p_trn_kD {0.0};               // Point turn derivative gain.
+    inline constexpr int a_max_str_speed {12000};               // Maximum voltage for straight driving.
+    inline constexpr int a_max_p_trn_speed {3000};             // Maximum voltage for point turning.
+    inline constexpr int a_min_str_speed {1000};               // Minimum voltage for straight driving.
+    inline constexpr int a_min_p_trn_speed {1000};             // Minimum voltage for point turning.
+    inline constexpr double a_heading_correct_kP {100.0};
 }
 
 //* External objects
