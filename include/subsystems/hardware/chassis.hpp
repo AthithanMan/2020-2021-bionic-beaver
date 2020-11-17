@@ -39,6 +39,8 @@ public:
     void drive_vel(int velocity = 0);
     void drive_vel(int l_velocity, int r_velocity);
     void drive_vol(int l_voltage = 0, int r_voltage = 0);
+    void drive_volts(int volts = 0);
+    void drive_volts(int l_volts, int r_volts);
 
 private:
     pros::Motor m_LF;
