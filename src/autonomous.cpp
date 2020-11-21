@@ -50,6 +50,7 @@ void intake_until_torque(void)
 
         pros::delay(500);
         do {pros::delay(20);} while (h_obj_conveyor->m_CB.get_torque() < 0.2);
+        pros::delay(100);
 
         h_obj_conveyor->set_vel();
         h_obj_intake->set_vel();
@@ -65,6 +66,7 @@ void intake_until_two_torque(void)
 
         pros::delay(500);
         do {pros::delay(20);} while (h_obj_conveyor->m_CB.get_torque() < 0.2);
+        pros::delay(50);
 
         h_obj_conveyor->set_vel();
         pros::delay(500);
@@ -84,7 +86,7 @@ void intake_intakes_until_watts(void)
 
         pros::delay(500);
         do {pros::delay(20);} while ((h_obj_intake->m_IL.get_power() + h_obj_intake->m_IR.get_power()) / 2 < 5.0);
-        pros::delay(1000);
+        pros::delay(1250);
 
         h_obj_intake->set_vel();
     }
@@ -154,7 +156,7 @@ void skills()
     pros::delay(500);
     h_obj_conveyor->set_vel();
     h_obj_intake->set_vel();
-    a_obj_pid->set_gains(gains_p_trn).set_target(a_Degrees{128.55}).drive();
+    a_obj_pid->set_gains(gains_p_trn).set_target(a_Degrees{128.0}).drive();
     pros::delay(10);
     intake_task_three.notify();
     a_obj_pid->set_gains(gains_str).set_target(a_Ticks{5.2_ft}).drive();
@@ -163,24 +165,38 @@ void skills()
     h_obj_conveyor->set_vel(600, 0);
     pros::delay(700);
     h_obj_conveyor->set_vel();
-    a_obj_pid->set_gains(gains_str).set_target(a_Ticks{-1.8_ft}).drive();
+    a_obj_pid->set_gains(gains_str).set_target(a_Ticks{-1.7_ft}).drive();
+    h_obj_conveyor->set_vel(0, 600);
+    h_obj_intake->set_vel(600);
+    pros::delay(500);
+    h_obj_conveyor->set_vel();
+    h_obj_intake->set_vel();
 
-    a_obj_pid->set_gains(gains_p_trn).set_target(a_Degrees{45.0}).drive();
+    a_obj_pid->set_gains(gains_p_trn).set_target(a_Degrees{43.0}).drive();
     pros::delay(10);
-    a_obj_pid->set_gains(gains_str).set_target(a_Ticks{3.25_ft}).drive();
+    a_obj_pid->set_gains(gains_str).set_target(a_Ticks{3.0_ft}).drive();
     h_obj_conveyor->set_vel(600);
     pros::delay(900);
     h_obj_conveyor->set_vel();
-    a_obj_pid->set_gains(gains_str).set_target(a_Ticks{-3.0_ft}).drive();
+    a_obj_pid->set_gains(gains_str).set_target(a_Ticks{-2.5_ft}).drive();
     pros::delay(10);
-    a_obj_pid->set_gains(gains_p_trn).set_target(a_Degrees{25.0}).drive();
+    a_obj_pid->set_gains(gains_p_trn).set_target(a_Degrees{25.75}).drive();
     pros::delay(10);
     intake_task_one.notify();
-    a_obj_pid->set_gains(gains_str).set_target(a_Ticks{8.05_ft}).drive();
+    a_obj_pid->set_gains(gains_str).set_target(a_Ticks{7.35_ft}).drive();
     h_obj_conveyor->set_vel(600);
     pros::delay(1000);
     h_obj_conveyor->set_vel();
     a_obj_pid->set_gains(gains_str).set_target(a_Ticks{-3.3_ft}).drive();
+}
+
+void telem_a()
+{
+    while (true)
+    {
+        pros::lcd::print(1, "%f", h_obj_sensors->get_rotation());
+        pros::delay(10);
+    }
 }
 
 // Main autonomous control callback.
@@ -188,6 +204,8 @@ void autonomous()
 {
     // Create new a_PID object into heap memory.
     a_obj_pid = new a_PID{gains_str};
+
+    pros::Task foo {telem_a};
 
     // Run each auto routine based on selected auto.
     switch (a_routine)

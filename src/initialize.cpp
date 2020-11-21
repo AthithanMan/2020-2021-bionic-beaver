@@ -142,12 +142,13 @@ void disabled()
     // Set the pointers to nullptr so we don't access illegal memory addresses.
     a_obj_pid = nullptr;
     a_obj_bad_move = nullptr;
+    clear_screen();
 }
 
 // Competition initialization callback.
 void competition_initialize()
 {
-
+    clear_screen();
 }
 
 // Main initialization callback.

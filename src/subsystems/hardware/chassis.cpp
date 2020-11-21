@@ -77,19 +77,3 @@ void h_Chassis::drive_vol(int l_voltage, int r_voltage)
     m_LB.move(l_voltage);
     m_RB.move(r_voltage);
 }
-
-void h_Chassis::drive_volts(int volts)
-{
-    m_LF.move_voltage(volts);
-    m_RF.move_voltage(volts);
-    m_LB.move_voltage(volts);
-    m_RB.move_voltage(volts);
-}
-
-void h_Chassis::drive_volts(int l_volts, int r_volts)
-{
-    m_LF.move_voltage(l_volts);
-    m_RF.move_voltage(r_volts);
-    m_LB.move_voltage(l_volts);
-    m_RB.move_voltage(r_volts);
-}
