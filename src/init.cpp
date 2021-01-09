@@ -25,6 +25,8 @@ void selection(void)
 
         pros::delay(10);
     }
+
+    pros::lcd::print(0, "                              ");
 }
 
 /// init callback

@@ -39,7 +39,7 @@ void controls(void)
     while (!(pros::competition::is_autonomous() || pros::competition::is_disabled()))
     {
         if (controller.getDigital(okapi::ControllerDigital::R1))        // index
-            regular_move(600, 0, 0);
+            regular_move(600, 600, 0);
         else if (controller.getDigital(okapi::ControllerDigital::R2))   // cycle
             {
                 ++log_time;

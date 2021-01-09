@@ -8,8 +8,8 @@ okapi::MotorGroup intakes {
     okapi::Motor{7, true, okapi::AbstractMotor::gearset::blue, okapi::AbstractMotor::encoderUnits::counts}
 };
 
-okapi::Motor convey_top {8, false, okapi::AbstractMotor::gearset::blue, okapi::AbstractMotor::encoderUnits::counts};
-okapi::Motor convey_bot {15, false, okapi::AbstractMotor::gearset::blue, okapi::AbstractMotor::encoderUnits::counts};
+okapi::Motor convey_top {8, true, okapi::AbstractMotor::gearset::blue, okapi::AbstractMotor::encoderUnits::counts};
+okapi::Motor convey_bot {15, true, okapi::AbstractMotor::gearset::blue, okapi::AbstractMotor::encoderUnits::counts};
 
 okapi::Controller controller {okapi::ControllerId::master};
 
